@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.biz.oracle.db.StdSQL;
+import com.biz.oracle.sql.StdSQL;
 import com.biz.oracle.vo.StdVO;
 
 public interface StdDAO {
@@ -16,7 +16,7 @@ public interface StdDAO {
 	public List<StdVO> selectAll();
 	
 	@Select(StdSQL.STD_FIND_NUM)
-	public StdVO findByNum(String st_num);
+	public StdVO findByNum(int st_num);
 	
 	@Select(StdSQL.STD_FIND_NAME)
 	public List<StdVO> findByName(String st_name);

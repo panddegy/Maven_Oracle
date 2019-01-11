@@ -20,38 +20,13 @@ import com.biz.oracle.vo.StdVO;
 
 public class StdService {
 	
-	SqlSessionFactory sessionFactory;
 	Scanner sc;
+	SqlSessionFactory sessionFactory;
 	
 	public StdService() {
 		// TODO Auto-generated constructor stub
-		
-		sc=new Scanner(System.in);
-		String driver="oracle.jdbc.driver.OracleDriver";
-		String url="jdbc:oracle:thin:@localhost:1521:xe";
-		String user="mybts";
-		String password="1234";
-		
-		Properties props=new Properties();
-		props.put("DRIVER", driver);
-		props.put("URL", url);
-		props.put("USER", user);
-		props.put("PASSWORD", password);
-		
-		StdDSFactory StdDSF=new StdDSFactory();
-		StdDSF.setProperties(props);
-		
-		DataSource ds=StdDSF.getDataSource();
-		
-		TransactionFactory transF=new JdbcTransactionFactory();
-		
-		Environment env=new Environment("StdEnv", transF, ds);
-		
-		Configuration config=new Configuration(env);
-		config.addMapper(StdDAO.class);
-		
-		this.sessionFactory=new SqlSessionFactoryBuilder().build(config);
-		
+		OracleSQLFactory os=new OracleSQLFactory();
+		this.sessionFactory=os.getSqlSessionFactory();
 	}
 	
 	public void stdView() {
@@ -109,6 +84,17 @@ public class StdService {
 		String st_tel=sc.nextLine();
 		
 		vo=new StdVO(st_num,st_name,st_grade,st_tel);
+		
+		return vo;
+	}
+
+	public StdVO stdViewInfo(String st_num) {
+		// TODO Auto-generated method stub
+		
+		SqlSession session=this.sessionFactory.openSession();
+		StdDAO dao=session.getMapper(StdDAO.class);
+		
+		StdVO vo=dao.findByNum(Integer.valueOf(st_num));
 		
 		return vo;
 	}

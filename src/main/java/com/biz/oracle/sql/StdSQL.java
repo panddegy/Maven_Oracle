@@ -1,4 +1,4 @@
-package com.biz.oracle.db;
+package com.biz.oracle.sql;
 
 public class StdSQL {
 
